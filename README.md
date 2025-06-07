@@ -1,120 +1,88 @@
-### **Course Project Proposal: Career Recommendation System Using Machine Learning**
+# Career Recommendation System Using Machine Learning
 
-#### 1. **Project Title:**
+## 🎯 Objective
+To build a machine learning-based web application that provides personalized career suggestions to users based on their interests, skills, and preferences. The system uses a trained classification model to match user input with suitable career paths.
 
-**"Career Recommendation System Using Machine Learning: Personalized Career Suggestions Based on Interests and Aptitudes"**
+## 💡 Motivation
+Many students and early professionals struggle to choose the right career. Our project aims to provide data-driven recommendations, acting as a virtual career counselor. This tool can reduce uncertainty and support informed decision-making.
 
-#### 2. **Objective:**
+## 🔍 Scope
+- Collect and preprocess user input data (skills, interests, academic scores).
+- Train an ML model to classify user profiles into career categories.
+- Build a Flask-based web application for user interaction.
+- Display the top 3–5 career suggestions with brief descriptions.
+- Deploy the system using Replit or PythonAnywhere.
 
-To develop a machine learning-based web application that provides career suggestions to users based on their interests, skills, and academic performance. The system uses a trained model to match user profiles with suitable career paths, aiming to guide students and professionals in making informed career decisions.
+## 🧪 Methodology
 
-#### 3. **Motivation:**
+### 1. Data Collection
+- Use open datasets or manually created CSV with features like subject interest, technical/non-technical skills, preferred domains, etc.
+- Perform cleaning and encoding (e.g., label encoding, one-hot encoding).
 
-Choosing a career path is one of the most crucial decisions in a person's life. However, many students and early professionals are unaware of career options that match their strengths and preferences. This project is motivated by the need to help users find suitable careers using data-driven insights, reduce the stress of career selection, and make personalized guidance more accessible.
+### 2. Model Development
+- Train using classification algorithms: Decision Tree, Random Forest, or Logistic Regression.
+- Evaluate with metrics like accuracy and F1-score.
+- Save the model as `model.pkl` using `joblib`.
 
-#### 4. **Scope:**
+### 3. Web Application
+- Use Flask to create routes and serve HTML pages.
+- Create a simple frontend using HTML/CSS for user input and output.
+- Integrate ML model to predict careers based on submitted data.
 
-* Collecting input on user interests, skills, and preferences.
-* Developing a predictive model using machine learning (classification techniques).
-* Designing a web interface to collect inputs and show recommendations.
-* Providing top 3–5 career suggestions with relevant descriptions.
-* Deploying the application online using Replit or a cloud platform.
+### 4. Testing
+- Validate predictions with different inputs.
+- Handle incorrect inputs and provide feedback.
+- Ensure UI responsiveness and usability.
 
-#### 5. **Methodology:**
+## 🛠️ Tools and Technologies
+- **Languages:** Python, HTML, CSS
+- **Libraries:** Scikit-learn, Pandas, Numpy, Joblib
+- **Framework:** Flask
+- **Visualization:** Matplotlib, Seaborn
+- **Collaboration:** GitHub, Google Drive, Replit Teams
+- **Deployment:** Replit / PythonAnywhere
 
-##### 5.1 Data Collection:
+## ⚠️ Challenges and Solutions
+| Challenge | Solution |
+|----------|----------|
+| Small or imbalanced dataset | Use synthetic data or expand dataset manually |
+| Model underperformance | Try different algorithms and tune hyperparameters |
+| New team to tech stack | Use beginner-friendly tools and tutorials |
+| Remote collaboration | Use shared drives, Trello, and Replit for version control |
 
-* Use publicly available datasets or create a small dataset with attributes such as interests, skill ratings, subject strengths, and career labels.
-* Clean, preprocess, and encode the data using techniques like normalization and one-hot encoding.
+## 🎯 Expected Outcome
+- A responsive web app that collects user input and provides top career suggestions.
+- A trained ML model with decent prediction accuracy.
+- A structured codebase and clean UI.
+- A complete report documenting the process, learnings, and future scope.
 
-##### 5.2 Model Development:
+## 👥 Team Member Roles
 
-* Train a classification model using algorithms like Decision Tree, Random Forest, or Logistic Regression.
-* Evaluate models using cross-validation and select the best-performing one based on accuracy and F1-score.
+| Member | Role | Responsibility |
+|--------|------|----------------|
+| A | ML Engineer & Team Lead | Dataset, model training, guidance |
+| B | Backend Developer | Flask routes, model integration |
+| C | Frontend Developer | HTML form, result display, CSS |
+| D | Tester & Debugger | Input validation, UI testing |
+| E | Documentation & UI Design | Report writing, slides, UI tweaks |
 
-##### 5.3 Web Application:
+## 🗓️ 4-Week Timeline
 
-* Use **Flask** to build a lightweight backend.
-* Develop simple HTML forms to collect user input and display results.
-* Use a `model.pkl` file to load the trained model and make predictions in real-time.
+| Week | Tasks |
+|------|--------|
+| **Week 1** | Finalize project, assign roles, setup tools, collect dataset, preprocessing |
+| **Week 2** | Train model, evaluate, begin Flask backend and HTML form |
+| **Week 3** | Model integration, form connection, result display, testing |
+| **Week 4** | Final fixes, deployment, prepare report, slide deck, and submit |
 
-##### 5.4 Testing:
+## ✅ How to Run
+1. Clone or fork this repository.
+2. Install dependencies: `pip install -r requirements.txt`
+3. Run the Flask app: `python app.py`
+4. Open browser at `http://localhost:5000/` to interact with the app.
 
-* Check model predictions for various input combinations.
-* Validate form behavior, error handling, and output display.
-
-#### 6. **Tools and Technologies:**
-
-* **Languages:** Python, HTML, CSS
-* **Frameworks:** Flask for backend, Sklearn for ML, Pandas for data handling
-* **Libraries:** Numpy, Joblib, Matplotlib
-* **Deployment:** Replit or Flask on PythonAnywhere
-* **Collaboration:** Google Drive, GitHub, or Replit team invite
-* **Project Management:** Trello, WhatsApp for updates
-
-#### 7. **Challenges and Solutions:**
-
-* **Data Size Limitations:** Start with a smaller dataset; simulate with synthetic data if needed.
-* **Model Accuracy:** Apply feature engineering and try multiple algorithms.
-* **Team Coordination:** Use shared tools like Replit, Drive, and Trello to manage collaboration.
-* **Limited Technical Background:** Assign tasks with learning resources and tutorials for each role.
-
-#### 8. **Expected Outcome:**
-
-* A working web app that predicts careers based on user input.
-* A trained and saved ML model with decent prediction accuracy.
-* Simple and clean UI to collect and display results.
-* Project report detailing approach, results, challenges, and learnings.
-
-#### 9. **Team Member Roles:**
-
-| Member | Role                       | Responsibilities                                   |
-| ------ | -------------------------- | -------------------------------------------------- |
-| A      | Project Lead & ML Engineer | Model design, training, testing, and guiding team  |
-| B      | Backend Developer          | Flask routing, input processing, model integration |
-| C      | Frontend Developer         | Designing `form.html` and `result.html`, CSS       |
-| D      | Tester & Debugger          | Validating inputs, checking prediction output      |
-| E      | Report & Output Designer   | Documentation, UI styling, final presentation      |
-
-### 10. **Timeline (4 Weeks)**
-
-| **Week**                                                                | **Task** |
-| ----------------------------------------------------------------------- | -------- |
-| **Week 1**                                                              |          |
-| ✅ Finalize project topic and objectives                                 |          |
-| ✅ Assign roles to all 5 members                                         |          |
-| ✅ Choose tools: Replit, Google Drive, Trello, etc.                      |          |
-| ✅ Collect/create dataset (CSV file with interests, skills, careers)     |          |
-| ✅ Do basic data cleaning and preprocessing                              |          |
-| ✅ Start basic EDA (Exploratory Data Analysis)                           |          |
-| **Week 2**                                                              |          |
-| ✅ Train a basic ML model (Decision Tree, Random Forest)                 |          |
-| ✅ Tune and evaluate model (accuracy, F1-score)                          |          |
-| ✅ Save the model using `joblib` or `pickle`                             |          |
-| ✅ Start building Flask backend                                          |          |
-| ✅ Start creating basic HTML frontend (form input for skills, interests) |          |
-| **Week 3**                                                              |          |
-| ✅ Integrate frontend with Flask backend                                 |          |
-| ✅ Connect model to backend for predictions                              |          |
-| ✅ Add output display (career suggestions)                               |          |
-| ✅ Perform testing with sample inputs                                    |          |
-| ✅ UI polishing: CSS, error handling, form validation                    |          |
-| **Week 4**                                                              |          |
-| ✅ Final testing and improvements                                        |          |
-| ✅ Deploy project on Replit / PythonAnywhere                             |          |
-| ✅ Write final project report + presentation slides                      |          |
-| ✅ Collect feedback from team/friends                                    |          |
-| ✅ Submit final deliverables (code + report + deployment link)           |          |
-
-#### 11. **Conclusion:**
-
-The Career Recommendation System will provide personalized career suggestions using a user-friendly interface and a trained ML model. It can act as a mini career counselor for students and can be enhanced further with real-world data and more user attributes.
-
-#### 12. **References:**
-
-* Scikit-learn documentation
-* Flask documentation
-* Kaggle datasets on career prediction
-* Online ML tutorials from Coursera, NPTEL, or YouTube
-
-
+## 📚 References
+- [Scikit-learn Documentation](https://scikit-learn.org/)
+- [Flask Documentation](https://flask.palletsprojects.com/)
+- [Career Dataset - Kaggle](https://www.kaggle.com/)
+- Online ML Tutorials (YouTube, Coursera, NPTEL)
