@@ -85,4 +85,4 @@ Many students and early professionals struggle to choose the right career. Our p
 - [Scikit-learn Documentation](https://scikit-learn.org/)
 - [Flask Documentation](https://flask.palletsprojects.com/)
 - [Career Dataset - Kaggle](https://www.kaggle.com/)
-- Online ML Tutorials (YouTube, Coursera, NPTEL)
+- Online ML Tutorials (YouTube, ChatGPT)
