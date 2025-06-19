@@ -77,7 +77,7 @@ Many students and early professionals struggle to choose the right career. Our p
 
 ## ✅ How to Run
 1. Clone or fork this repository.
-2. Install dependencies: `pip install -r requirements.txt`
+2. Install dependencies: `pip install -r REQUIREMENTS.txt`
 3. Run the Flask app: `python app.py`
 4. Open browser at `http://localhost:5000/` to interact with the app.
 
