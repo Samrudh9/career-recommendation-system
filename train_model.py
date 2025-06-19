@@ -7,6 +7,8 @@ from sklearn.metrics import accuracy_score, classification_report
 import pickle
 import os
 
+
+
 # ✅ Normalization helper
 def normalize(text):
     return text.lower().replace('-', ' ').strip()
@@ -103,3 +105,4 @@ def train_career_model():
 if __name__ == "__main__":
     train_career_model()
     print("🚀 Training complete!")
+    print("=",*60)
