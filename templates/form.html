@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <title>Career Recommendation</title>
+</head>
+<body>
+
+  <h1>Career Guidance Form</h1>
+
+  <div class="form-container">
+    <h2>User Information Form</h2>
+    <form id="careerForm" action="/submit" method="POST">
+      <label for="name">Name:</label>
+      <input class="form-input" type="text" id="name" name="name" placeholder="Enter your name" required />
+
+      <label for="interest">Interest:</label>
+      <input class="form-input" type="text" id="interest" name="interest" placeholder="Enter your interest" required />
+
+      <label for="skills">Skills:</label>
+      <input class="form-input" type="text" id="skills" name="skills" placeholder="Enter your skills" required />
+
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+
+</body>
+</html>
