@@ -3,16 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/static/css/style.css" />
   <title>Career Recommendation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0b1d2e; 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ffffff;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.8rem;
+      color: #00f5ff;
+      margin-top: 40px;
+      text-shadow: 0 0 10px rgba(0, 245, 255, 0.7);
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: #a8d4f2;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    .form-container {
+      background-color: #1c2a38;
+      padding: 40px;
+      border-radius: 15px;
+      max-width: 600px;
+      margin: 50px auto;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #66ccff;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #c9e6ff;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      background-color: #2f4055;
+      color: #ffffff;
+    }
+
+    .form-input:focus {
+      outline: 2px solid #00ffff;
+      background-color: #3e536b;
+    }
+
+    input[type="submit"] {
+      background-color: #00cfff;
+      color: #001f33;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #00aacc;
+    }
+  </style>
 </head>
 <body>
 
-  <h1>Career Guidance Form</h1>
+  <h1>CAREER GUIDENCE FORM</h1>
+  <p class="subtitle">Based on your skills and interests, we've identified a tailored career path<br> that aligns with your professional growth goals.</p>
 
   <div class="form-container">
     <h2>User Information Form</h2>
-    <form id="careerForm" action="/submit" method="POST">
+    <form action="#" method="post">
       <label for="name">Name:</label>
       <input class="form-input" type="text" id="name" name="name" placeholder="Enter your name" required />
 
