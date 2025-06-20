@@ -83,7 +83,8 @@ def train_career_model():
     print("\n📄 Classification Report:\n", classification_report(y_test, y_pred))
 
     # Map descriptions
-    description_map = dict(zip(df['Career'], df['Description']))
+    description_map = {normalize(career): desc for career, desc in zip(df['Career'], df['Description'])}
+
 
     # Save model package
     model_package = {
@@ -91,7 +92,7 @@ def train_career_model():
         'feature_encoder': mlb,
         'feature_names': list(mlb.classes_),
         'careers': list(y.unique()),
-        'description': description_map
+        'descriptions': description_map
     }
 
     os.makedirs('model', exist_ok=True)
