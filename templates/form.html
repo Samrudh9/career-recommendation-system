@@ -86,7 +86,7 @@
 <body>
 
   <h1>CAREER GUIDENCE FORM</h1>
-  <p class="subtitle">Based on your skills and interests, we've identified a tailored career path<br> that aligns with your professional growth goals.</p>
+   
 
   <div class="form-container">
     <h2>User Information Form</h2>
@@ -100,9 +100,28 @@
       <label for="skills">Skills:</label>
       <input class="form-input" type="text" id="skills" name="skills" placeholder="Enter your skills"  />
 
+      <label for="qualification">Highest Qualification:</label>
+<input class="form-input" type="text" id="qualification" name="qualification" required />
+
+<label for="career">Preferred Career Field:</label>
+<select class="form-input" id="career" name="career">
+  <option value=""> Select a Field </option>
+  <option value="engineering">Engineering</option>
+  <option value="medical">Medical</option>
+  <option value="business">Business</option>
+  <option value="it">Information Technology</option>
+</select>
+
+<label for="email">Email:</label>
+<input class="form-input" type="email" id="email" name="email" placeholder="Enter your email" required />
+
+
+
+
       <input type="submit" value="Submit" />
     </form>
   </div>
 
 </body>
 </html>
+
