@@ -14,7 +14,6 @@ def load_model():
         return None
 
 model_package = load_model()
-
 # ✅ Normalize text
 def normalize(text):
     return text.lower().replace('-', ' ').strip()
