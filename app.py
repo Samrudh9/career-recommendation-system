@@ -86,7 +86,8 @@ def submit():
     interests = request.form['interest']
     skills = request.form['skills']
     qualification = request.form['qualification']
-    career_pref = request.form['career_pref']
+    career_pref = request.form.get('career_pref', '').strip()
+
 
     predictions = predict_career(interests, skills)
     top_career, confidence = predictions[0]
