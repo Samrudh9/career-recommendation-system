@@ -127,4 +127,24 @@
     </section>
   </section>
 </body>
+<script>
+  function checkPath() {
+    // Try to access the file programmatically
+    fetch('templates/form.html')
+      .then(response => {
+        if (response.ok) {
+          alert('File exists! Redirecting...');
+          window.location.href = 'templates/form.html';
+        } else {
+          alert('Error: File not found at templates/form.html');
+        }
+      })
+      .catch(error => {
+        alert('Network error: ' + error.message);
+      });
+  }
+</script>
+
+<!-- Update your button to use: -->
+<button onclick="checkPath()">Get Started</button>
 </html>
