@@ -28,6 +28,8 @@
   font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
   background: linear-gradient(90deg, var(--accent), #00ffe0);
   -webkit-background-clip: text;
+  background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: titleFadeIn 1.5s ease-in-out forwards;
   opacity: 0;
@@ -68,6 +70,7 @@
   text-transform: uppercase;
   background: linear-gradient(90deg, #00c2ff, #00ffe0);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .glass-card {
