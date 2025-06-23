@@ -55,6 +55,8 @@
     opacity: 1;
   }
 }
+
+
 .subtitle {
   font-family: 'Orbitron', 'Inter', 'Poppins', sans-serif;
   font-size: 1rem;
@@ -68,21 +70,25 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-    .glass-card {
-      background: var(--glass-color);
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 2.5rem;
-      width: 90%;
-      max-width: 700px;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-       animation: glassFadeIn 1.5s ease-out forwards;
+.glass-card {
+  background: var(--glass-color);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 2.5rem;
+  width: 90%;
+  max-width: 700px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: glassFadeIn 1.5s ease-out forwards;
   opacity: 0;
-  transform: translateY(20px);
-    }
+  transform: none;
+  margin: 0 auto 5rem auto; 
+}
+
+
+
 @keyframes glassFadeIn {
   to {
     opacity: 1;
@@ -92,6 +98,7 @@
     .glass-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 10px 50px rgba(0, 255, 255, 0.2);
+      z-index: 10;
     }
 
     .glass-card p {
@@ -128,6 +135,7 @@
         padding: 1.6rem;
       }
     }
+
  button {
       margin-top: 2rem;
       padding: 0.9rem 2rem;
@@ -152,32 +160,10 @@
         transform: translateY(0);
       }
     }
-.robot-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem; /* space between image and card */
-  flex-wrap: wrap; /* wrap on small screens */
-  padding: 2rem;
-}
-
-.robot-img {
-  width: 250px;         /* adjust as needed */
-  height: auto;
-  opacity: 0.9;
-  filter: brightness(0.9) contrast(1.1); /* optional blending tweak */
-  border-radius: 12px;  /* optional soft edges */
-}
 
 
-@media (max-width: 768px) {
-  .robot-wrapper {
-    flex-direction: column;
-  }
 
-  .robot-img {
-    width: 180px;
-    margin-bottom: 1rem;
-  }
-}
+
+
+
 

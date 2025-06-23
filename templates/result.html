@@ -5,93 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your AI Career Path</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --glass-color: rgba(255, 255, 255, 0.1);
-      --text-color: #1f1f1f;
-      --bg-color: #f7f9fc;
-      --highlight: #0077b6;
-      --accent: #023e8a;
-      --shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 2rem;
-    }
-    .title {
-      font-size: 2.7rem;
-      text-align: center;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: var(--accent);
-    }
-    .subtitle {
-      font-size: 1rem;
-      max-width: 630px;
-      text-align: center;
-      color: #407ab0bd;
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
-    }
-    .glass-card {
-      background: var(--glass-color);
-      border-radius: 1.9rem;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 2rem;
-      width: 100%;
-      max-width: 700px;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .glass-card h2 {
-      font-size: 1.8rem;
-      color: var(--accent);
-      margin-bottom: 0.6rem;
-    }
-    .glass-card p {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      text-align: justify;
-      color: #333;
-      margin: 0.3rem 0;
-    }
-    .info-label {
-      font-weight: bold;
-    }
-    @media (max-width: 600px) {
-      .title {
-        font-size: 1.9rem;
-      }
-      .glass-card h2 {
-        font-size: 1.5rem;
-      }
-      .glass-card {
-        padding: 1.6rem;
-      }
-    }
-  </style>
+<link rel="stylesheet" href="css/style.css"  />
 </head>
 <body>
-  <h1 class="title">Your Career Recommendation</h1>
-  <p class="subtitle">Based on your skills and interests, here's a personalized career path that suits your strengths and aspirations.</p>
-
+   
+  <h1 class="title">Your Career Recommendation </h1>
+  <p class="subtitle fade-in">Based on your skills and interests, we've identified a tailored career path that aligns with your professional growth goals.</p>
   <div class="glass-card">
-    <h2>{{ career }} </h2> <!-- Career -->
-    <p><span class="info-label">Confidence:</span> {{ confidence }}%</p>
-    <p><span class="info-label">Description:</span> {{ description}}</p>
-    <p><span class="info-label">Name:</span> {{ name }}</p>
-    <p><span class="info-label">Interests:</span> {{ interests }}</p>
-    <p><span class="info-label">Skills:</span> {{ skills }}</p>
+   
+    <h2>{{ career }}</h2>
+    <p>{{ description }}</p>
+    <p><strong>Confidence:</strong> {{ confidence }}%</p>
+    <p><strong>Name:</strong> {{ name }}</p>
+    <p><strong>Interests:</strong> {{ interests }}</p>
+    <p><strong>Skills:</strong> {{ skills }}</p>
+    <a href="https://in.indeed.com" target="_blank" rel="noopener noreferrer">Explore Opportunities</a>
   </div>
 </body>
 </html>
