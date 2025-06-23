@@ -77,6 +77,9 @@ def predict_career(interests, skills):
 # ✅ Route: Home page
 @app.route('/')
 def home():
+    return render_template('intro.html')
+@app.route('/form')
+def form():
     return render_template('form.html')
 
 # ✅ Route: Form submission
