@@ -85,16 +85,16 @@ def submit():
     name = request.form['name']
     interests = request.form['interest']
     skills = request.form['skills']
+    qualification = request.form['qualification']
+    career_pref = request.form.get('career_pref', '').strip()
+
 
     predictions = predict_career(interests, skills)
     top_career, confidence = predictions[0]
 
-    # Debug prints to diagnose description issue
-    print(f"DEBUG: Predicted career: {top_career}")
+       # ✅ Get the description for the predicted career (normalized)
     description_dict = model_package.get('descriptions', {})
-    print(f"DEBUG: Description keys: {list(description_dict.keys())}")
-
-    description = description_dict.get(top_career, "Description not available for this career.")
+    description = description_dict.get(top_career.lower(), "Description not available for this career.")
 
     # Process user input
     interests_list = [x.strip() for x in interests.split(',') if x.strip()]
@@ -104,6 +104,8 @@ def submit():
                            name=name,
                            interests=', '.join(interests_list),
                            skills=', '.join(skills_list),
+                           qualification=qualification,
+                           career_pref=career_pref,
                            career=top_career,
                            confidence=confidence,
                            description=description)

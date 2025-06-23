@@ -90,7 +90,7 @@
 
   <div class="form-container">
     <h2>User Information Form</h2>
-    <form action="#" method="post">
+    <form action="/submit" method="post">
       <label for="name">Name:</label>
       <input class="form-input" type="text" id="name" name="name" placeholder="Enter your name" required />
 
@@ -101,15 +101,16 @@
       <input class="form-input" type="text" id="skills" name="skills" placeholder="Enter your skills"  />
 
       <label for="qualification">Highest Qualification:</label>
-<input class="form-input" type="text" id="qualification" name="qualification" required />
+<input class="form-input" type="text" id="qualification" name="qualification" />
 
 <label for="career">Preferred Career Field:</label>
-<select class="form-input" id="career" name="career">
+<select class="form-input" id="career_pref" name="career_pref">
   <option value=""> Select a Field </option>
   <option value="engineering">Engineering</option>
   <option value="medical">Medical</option>
   <option value="business">Business</option>
   <option value="it">Information Technology</option>
+  <option value="creative">Creative</option>
 </select>
 
 
