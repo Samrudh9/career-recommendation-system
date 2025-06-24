@@ -63,12 +63,22 @@
       font-size: 1rem;
       background-color: rgba(255, 255, 255, 0.1);
       color: #ffffff;
+      font-weight: normal;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
     }
 
     .form-input:focus,
     select:focus {
       outline: 2px solid #00ffff;
       background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    select option {
+      background-color: #1c2a38;
+      color: #ffffff;
     }
 
     .drop-zone {
@@ -114,7 +124,6 @@
       to { opacity: 1; }
     }
 
-    /* ✅ Mobile-specific tweaks */
     @media (max-width: 500px) {
       h1 {
         font-size: 1.5rem;
@@ -151,8 +160,7 @@
       <input class="form-input" type="text" id="interest" name="interest" required />
 
       <label for="skills">Skills:</label>
-      <input class="form-input" type="text" id="skills" name="skills" list="skill-list"/>
-
+      <input class="form-input" type="text" id="skills" name="skills" list="skill-list" />
       <datalist id="skill-list">
         <option value="python"><option value="sql"><option value="java"><option value="android">
         <option value="communication"><option value="leadership"><option value="css"><option value="html">
@@ -174,8 +182,8 @@
       <input class="form-input" type="text" id="qualification" name="qualification" />
 
       <label for="career_pref">Preferred Career Field:</label>
-      <select class="form-input" id="career_pref" name="career_pref" required>
-        <option value="">Select a Field</option>
+      <select id="career_pref" name="career_pref" required>
+        <option value="" disabled selected hidden>Select a Field</option>
         <option value="engineering">Engineering</option>
         <option value="medical">Medical</option>
         <option value="business">Business</option>
