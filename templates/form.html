@@ -6,9 +6,7 @@
   <title>Career Guidance Form</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -27,12 +25,11 @@
     .form-container {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       padding: 20px;
-      width: 100%;
       max-width: 700px;
+      width: 100%;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
       animation: fadeIn 1s ease-in;
     }
@@ -53,8 +50,7 @@
       font-size: 0.95rem;
     }
 
-    .form-input,
-    select {
+    .form-input, select {
       width: 100%;
       padding: 10px;
       border: none;
@@ -63,15 +59,9 @@
       font-size: 1rem;
       background-color: rgba(255, 255, 255, 0.1);
       color: #ffffff;
-      font-weight: normal;
-      cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
     }
 
-    .form-input:focus,
-    select:focus {
+    .form-input:focus, select:focus {
       outline: 2px solid #00ffff;
       background-color: rgba(255, 255, 255, 0.15);
     }
@@ -82,22 +72,37 @@
     }
 
     .drop-zone {
-      border: 2px dashed #00cfff;
-      border-radius: 10px;
-      padding: 20px;
+      border: 3px dashed #00eaff;
+      border-radius: 15px;
+      padding: 30px;
       text-align: center;
-      color: #66ccff;
+      color: #00eaff;
       margin-bottom: 20px;
-      background-color: rgba(255, 255, 255, 0.08);
-      font-size: 0.95rem;
+      background-color: rgba(0, 255, 255, 0.05);
+      font-size: 1rem;
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      animation: pulseBorder 2s infinite;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+
+    .drop-zone:hover {
+      background-color: rgba(0, 255, 255, 0.1);
+      transform: scale(1.02);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+    }
+
+    .drop-zone::before {
+      content: "📄";
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 10px;
+      animation: floatIcon 2s ease-in-out infinite;
     }
 
     .drop-zone input[type="file"] {
       display: none;
-    }
-
-    .drop-zone label {
-      cursor: pointer;
     }
 
     input[type="submit"] {
@@ -124,28 +129,50 @@
       to { opacity: 1; }
     }
 
+    @keyframes pulseBorder {
+      0% { border-color: #00eaff; }
+      50% { border-color: #0077ff; }
+      100% { border-color: #00eaff; }
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
     @media (max-width: 500px) {
-      h1 {
-        font-size: 1.5rem;
-      }
+      h1 { font-size: 1.5rem; }
+      label { font-size: 0.85rem; }
+      .form-input, select { font-size: 0.95rem; }
+      .drop-zone { font-size: 0.85rem; padding: 20px; }
+      input[type="submit"] { font-size: 0.95rem; padding: 12px; }
+    }
 
-      label {
-        font-size: 0.85rem;
-      }
+    .suggestions {
+      position: relative;
+    }
 
-      .form-input, select {
-        font-size: 0.95rem;
-      }
+    .suggestion-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #1c2a38;
+      border-radius: 10px;
+      z-index: 999;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+    }
 
-      .drop-zone {
-        font-size: 0.85rem;
-        padding: 15px;
-      }
+    .suggestion-list div {
+      padding: 8px 12px;
+      cursor: pointer;
+      color: white;
+    }
 
-      input[type="submit"] {
-        font-size: 0.95rem;
-        padding: 12px;
-      }
+    .suggestion-list div:hover {
+      background-color: #0072ff;
     }
   </style>
 </head>
@@ -160,23 +187,10 @@
       <input class="form-input" type="text" id="interest" name="interest" required />
 
       <label for="skills">Skills:</label>
-      <input class="form-input" type="text" id="skills" name="skills" list="skill-list" />
-      <datalist id="skill-list">
-        <option value="python"><option value="sql"><option value="java"><option value="android">
-        <option value="communication"><option value="leadership"><option value="css"><option value="html">
-        <option value="javascript"><option value="c++"><option value="algorithms"><option value="R">
-        <option value="statistics"><option value="tensorflow"><option value="cybersecurity"><option value="networking">
-        <option value="linux"><option value="shell scripting"><option value="adobe photoshop"><option value="illustrator">
-        <option value="3D modeling"><option value="cad"><option value="excel"><option value="business analysis">
-        <option value="flask"><option value="salesforce"><option value="CRM"><option value="SEO">
-        <option value="google analytics"><option value="pandas"><option value="numpy"><option value="UI/UX design">
-        <option value="figma"><option value="financial modeling"><option value="MATLAB"><option value="control system">
-        <option value="SAP"><option value="EAP system"><option value="pytorch"><option value="AWS">
-        <option value="Docker"><option value="kubernetes"><option value="English"><option value="story-telling">
-        <option value="Recruitment"><option value="onboarding"><option value="taxation"><option value="teaching">
-        <option value="mentoring"><option value="Event planning"><option value="Budgeting"><option value="Negotiation">
-        <option value="Market-Research"><option value="Research"><option value="writing"><option value="Spring boot">
-      </datalist>
+      <div class="suggestions">
+        <input class="form-input" type="text" id="skills" name="skills" autocomplete="off" />
+        <div class="suggestion-list" id="suggestion-box"></div>
+      </div>
 
       <label for="qualification">Highest Qualification:</label>
       <input class="form-input" type="text" id="qualification" name="qualification" />
@@ -199,5 +213,57 @@
       <input type="submit" value="Submit" />
     </form>
   </div>
+
+  <script>
+    const skills = [
+      "python", "sql", "java", "android", "communication", "leadership", "css", "html",
+      "javascript", "c++", "algorithms", "R", "statistics", "tensorflow", "cybersecurity",
+      "networking", "linux", "shell scripting", "adobe photoshop", "illustrator", "3D modeling",
+      "cad", "excel", "business analysis", "flask", "salesforce", "CRM", "SEO", "google analytics",
+      "pandas", "numpy", "UI/UX design", "figma", "financial modeling", "MATLAB", "control system",
+      "SAP", "EAP system", "pytorch", "AWS", "Docker", "kubernetes", "English", "story-telling",
+      "Recruitment", "onboarding", "taxation", "teaching", "mentoring", "Event planning", "Budgeting",
+      "Negotiation", "Market-Research", "Research", "writing", "Spring boot"
+    ];
+
+    const input = document.getElementById("skills");
+    const suggestionBox = document.getElementById("suggestion-box");
+
+    input.addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      suggestionBox.innerHTML = "";
+
+      if (query.length === 0) {
+        suggestionBox.style.display = "none";
+        return;
+      }
+
+      const filtered = skills.filter(skill => skill.toLowerCase().includes(query));
+
+      if (filtered.length === 0) {
+        suggestionBox.style.display = "none";
+        return;
+      }
+
+      filtered.forEach(skill => {
+        const div = document.createElement("div");
+        div.textContent = skill;
+        div.addEventListener("click", () => {
+          input.value = skill;
+          suggestionBox.innerHTML = "";
+          suggestionBox.style.display = "none";
+        });
+        suggestionBox.appendChild(div);
+      });
+
+      suggestionBox.style.display = "block";
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".suggestions")) {
+        suggestionBox.style.display = "none";
+      }
+    });
+  </script>
 </body>
 </html>
