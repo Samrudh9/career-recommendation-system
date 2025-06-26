@@ -6,91 +6,104 @@
   <title>Career Guidance Form</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --glass-color: #1a1b22;
+      --text-color: #e0e0e0;
+      --bg-color: #1c1e24;
+      --highlight: #00688B;
+      --accent: #00c2ff;
+      --shadow: 0 12px 28px rgba(0, 255, 255, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: white;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 2rem;
     }
 
     .form-container {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
+      background: var(--glass-color);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      padding: 20px;
-      max-width: 700px;
+      box-shadow: var(--shadow);
+      padding: 2.5rem;
       width: 100%;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      animation: fadeIn 1s ease-in;
+      max-width: 700px;
+      animation: fadeIn 1.5s ease-in-out;
     }
 
     h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
       text-align: center;
-      font-size: 2rem;
-      color: #00f5ff;
-      text-shadow: 0 0 10px rgba(0, 245, 255, 0.7);
-      margin-bottom: 20px;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: linear-gradient(90deg, var(--accent), #00ffe0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+      line-height: 1.3;
     }
 
     label {
       display: block;
       margin-bottom: 6px;
-      font-weight: 500;
-      color: #c9e6ff;
       font-size: 0.95rem;
+      color: var(--text-color);
     }
 
     .form-input, select {
       width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 10px;
+      padding: 12px;
+      border-radius: 12px;
       margin-bottom: 18px;
       font-size: 1rem;
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(255, 255, 255, 0.05);
       color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .form-input:focus, select:focus {
-      outline: 2px solid #00ffff;
-      background-color: rgba(255, 255, 255, 0.15);
+      outline: 2px solid var(--accent);
+      background-color: rgba(255, 255, 255, 0.1);
     }
 
     select option {
       background-color: #1c2a38;
-      color: #ffffff;
+      color: white;
     }
 
     .drop-zone {
-      border: 3px dashed #00eaff;
+      border: 2px dashed var(--accent);
       border-radius: 15px;
       padding: 30px;
       text-align: center;
-      color: #00eaff;
+      color: var(--accent);
       margin-bottom: 20px;
-      background-color: rgba(0, 255, 255, 0.05);
+      background-color: rgba(0, 255, 255, 0.04);
       font-size: 1rem;
-      position: relative;
       cursor: pointer;
       transition: background-color 0.3s ease, transform 0.3s ease;
-      animation: pulseBorder 2s infinite;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+      position: relative;
     }
 
     .drop-zone:hover {
       background-color: rgba(0, 255, 255, 0.1);
       transform: scale(1.02);
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
     }
 
     .drop-zone::before {
@@ -98,7 +111,6 @@
       font-size: 2rem;
       display: block;
       margin-bottom: 10px;
-      animation: floatIcon 2s ease-in-out infinite;
     }
 
     .drop-zone input[type="file"] {
@@ -110,80 +122,56 @@
       margin-top: 10px;
       color: #00ffaa;
       font-weight: 500;
-      font-size: 0.95rem;
     }
 
     #upload-success {
       display: none;
       margin-top: 10px;
       color: #00ffaa;
-      font-size: 1.2rem;
-      font-weight: bold;
+      font-size: 1.1rem;
     }
 
     .drop-zone.uploaded {
       background-color: rgba(0, 255, 0, 0.1);
       border-color: #00ff88;
-      box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
       color: #00ff88;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
     }
 
     input[type="submit"] {
-      background: linear-gradient(45deg, #00c6ff, #0072ff);
-      border: none;
-      color: white;
+      background-color: var(--accent);
+      color: #111;
       padding: 12px 20px;
       font-size: 1rem;
-      border-radius: 50px;
-      cursor: pointer;
       font-weight: bold;
+      border: none;
+      border-radius: 50px;
       width: 100%;
-      transition: all 0.3s ease;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
       box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
     }
 
     input[type="submit"]:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 198, 255, 0.6);
+      background-color: #00ddc2;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .suggestions {
+      position: relative;
     }
-
-    @keyframes pulseBorder {
-      0% { border-color: #00eaff; }
-      50% { border-color: #0077ff; }
-      100% { border-color: #00eaff; }
-    }
-
-    @keyframes floatIcon {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-
-    @media (max-width: 500px) {
-      h1 { font-size: 1.5rem; }
-      label { font-size: 0.85rem; }
-      .form-input, select { font-size: 0.95rem; }
-      .drop-zone { font-size: 0.85rem; padding: 20px; }
-      input[type="submit"] { font-size: 0.95rem; padding: 12px; }
-    }
-
-    .suggestions { position: relative; }
 
     .suggestion-list {
       position: absolute;
       top: 100%;
       left: 0;
       right: 0;
-      background-color: #1c2a38;
+      background-color: #1a1b22;
       border-radius: 10px;
       z-index: 999;
       max-height: 150px;
       overflow-y: auto;
       display: none;
+      border: 1px solid rgba(255,255,255,0.1);
     }
 
     .suggestion-list div {
@@ -195,11 +183,25 @@
     .suggestion-list div:hover {
       background-color: #0072ff;
     }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+      .form-container {
+        padding: 1.6rem;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
   <div class="form-container">
-    <h1>CAREER GUIDANCE FORM</h1>
+    <h1>Career Guidance Form</h1>
     <form action="/submit" method="post" enctype="multipart/form-data">
       <label for="name">Name:</label>
       <input class="form-input" type="text" id="name" name="name" required />
@@ -238,16 +240,7 @@
   </div>
 
   <script>
-    const skills = [
-      "python", "sql", "java", "android", "communication", "leadership", "css", "html",
-      "javascript", "c++", "algorithms", "R", "statistics", "tensorflow", "cybersecurity",
-      "networking", "linux", "shell scripting", "adobe photoshop", "illustrator", "3D modeling",
-      "cad", "excel", "business analysis", "flask", "salesforce", "CRM", "SEO", "google analytics",
-      "pandas", "numpy", "UI/UX design", "figma", "financial modeling", "MATLAB", "control system",
-      "SAP", "EAP system", "pytorch", "AWS", "Docker", "kubernetes", "English", "story-telling",
-      "Recruitment", "onboarding", "taxation", "teaching", "mentoring", "Event planning", "Budgeting",
-      "Negotiation", "Market-Research", "Research", "writing", "Spring boot"
-    ];
+    const skills = [ "python", "sql", "java", "android", "communication", "leadership", "css", "html", "javascript", "c++", "algorithms", "R", "statistics", "tensorflow", "cybersecurity", "networking", "linux", "shell scripting", "adobe photoshop", "illustrator", "3D modeling", "cad", "excel", "business analysis", "flask", "salesforce", "CRM", "SEO", "google analytics", "pandas", "numpy", "UI/UX design", "figma", "financial modeling", "MATLAB", "control system", "SAP", "EAP system", "pytorch", "AWS", "Docker", "kubernetes", "English", "story-telling", "Recruitment", "onboarding", "taxation", "teaching", "mentoring", "Event planning", "Budgeting", "Negotiation", "Market-Research", "Research", "writing", "Spring boot" ];
 
     const input = document.getElementById("skills");
     const suggestionBox = document.getElementById("suggestion-box");
