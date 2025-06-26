@@ -105,6 +105,29 @@
       display: none;
     }
 
+    #file-name {
+      display: block;
+      margin-top: 10px;
+      color: #00ffaa;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    #upload-success {
+      display: none;
+      margin-top: 10px;
+      color: #00ffaa;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .drop-zone.uploaded {
+      background-color: rgba(0, 255, 0, 0.1);
+      border-color: #00ff88;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+      color: #00ff88;
+    }
+
     input[type="submit"] {
       background: linear-gradient(45deg, #00c6ff, #0072ff);
       border: none;
@@ -148,9 +171,7 @@
       input[type="submit"] { font-size: 0.95rem; padding: 12px; }
     }
 
-    .suggestions {
-      position: relative;
-    }
+    .suggestions { position: relative; }
 
     .suggestion-list {
       position: absolute;
@@ -188,7 +209,7 @@
 
       <label for="skills">Skills:</label>
       <div class="suggestions">
-        <input class="form-input" type="text" id="skills" name="skills" autocomplete="off" />
+        <input class="form-input" type="text" id="skills" name="skills" autocomplete="off" placeholder="e.g., Python, SQL, Java" />
         <div class="suggestion-list" id="suggestion-box"></div>
       </div>
 
@@ -205,9 +226,11 @@
         <option value="creative">Creative</option>
       </select>
 
-      <div class="drop-zone">
-        <label for="resume">Click or drag your resume here to upload (PDF/DOC):</label>
+      <div class="drop-zone" id="dropZone">
+        <label for="resume" id="resume-label">Click or drag your resume here to upload (PDF/DOC):</label>
         <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" />
+        <span id="file-name"></span>
+        <span id="upload-success">✔ File Uploaded</span>
       </div>
 
       <input type="submit" value="Submit" />
@@ -230,15 +253,17 @@
     const suggestionBox = document.getElementById("suggestion-box");
 
     input.addEventListener("input", function () {
-      const query = this.value.toLowerCase();
+      const entered = this.value;
+      const parts = entered.split(',');
+      const currentWord = parts[parts.length - 1].trim().toLowerCase();
       suggestionBox.innerHTML = "";
 
-      if (query.length === 0) {
+      if (currentWord.length === 0) {
         suggestionBox.style.display = "none";
         return;
       }
 
-      const filtered = skills.filter(skill => skill.toLowerCase().includes(query));
+      const filtered = skills.filter(skill => skill.toLowerCase().includes(currentWord));
 
       if (filtered.length === 0) {
         suggestionBox.style.display = "none";
@@ -249,9 +274,11 @@
         const div = document.createElement("div");
         div.textContent = skill;
         div.addEventListener("click", () => {
-          input.value = skill;
+          parts[parts.length - 1] = skill;
+          input.value = parts.map(p => p.trim()).join(", ") + ", ";
           suggestionBox.innerHTML = "";
           suggestionBox.style.display = "none";
+          input.focus();
         });
         suggestionBox.appendChild(div);
       });
@@ -262,6 +289,26 @@
     document.addEventListener("click", (e) => {
       if (!e.target.closest(".suggestions")) {
         suggestionBox.style.display = "none";
+      }
+    });
+
+    document.getElementById("resume").addEventListener("change", function () {
+      const file = this.files[0];
+      const fileNameSpan = document.getElementById("file-name");
+      const dropZone = document.getElementById("dropZone");
+      const uploadSuccess = document.getElementById("upload-success");
+      const label = document.getElementById("resume-label");
+
+      if (file) {
+        fileNameSpan.textContent = `Resume uploaded: ${file.name}`;
+        dropZone.classList.add("uploaded");
+        uploadSuccess.style.display = "inline";
+        label.style.display = "none";
+      } else {
+        fileNameSpan.textContent = "";
+        dropZone.classList.remove("uploaded");
+        uploadSuccess.style.display = "none";
+        label.style.display = "inline";
       }
     });
   </script>
