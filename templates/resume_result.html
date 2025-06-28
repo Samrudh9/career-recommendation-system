@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Analysis Result</title>
+</head>
+<body>
+  <h1>Resume Analysis Result</h1>
+
+  {% if analysis_result %}
+    <h3>Detected Skills:</h3>
+    <ul>
+      {% for skill in analysis_result.skills %}
+        <li>{{ skill }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Suggested Career(s):</h3>
+    <ul>
+      {% for career in analysis_result.careers %}
+        <li>{{ career }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Suggestions to Improve Resume:</h3>
+    <ul>
+      {% for tip in analysis_result.suggestions %}
+        <li>{{ tip }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No analysis data available.</p>
+  {% endif %}
+
+  <a href="/">Go back</a>
+</body>
+</html>
