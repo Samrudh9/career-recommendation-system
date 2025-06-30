@@ -100,9 +100,7 @@ def form():
 def about():
     return render_template('about.html')
 
-@app.route('/upload')
-def resources():
-    return render_template('upload_form.html')
+
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -133,8 +131,8 @@ def submit():
 
 # ===== Resume Upload Page =====
 @app.route('/upload')
-def upload_resume():
-    return render_template('upload_resume.html')
+def resources():
+    return render_template('upload_form.html')
 
 @app.route('/analyze_resume', methods=['POST'])
 def analyze_resume_route():
