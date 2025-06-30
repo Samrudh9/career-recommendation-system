@@ -100,6 +100,11 @@ def form():
 def about():
     return render_template('about.html')
 
+@app.route('/upload')
+def resources():
+    return render_template('upload_form.html')
+    
+
 @app.route('/submit', methods=['POST'])
 def submit():
     name = request.form['name']

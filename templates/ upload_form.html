@@ -142,14 +142,13 @@
     <p>Your resume helps us understand your qualifications, skills, and interests better.
     Uploading it allows us to give personalized career guidance and recommend paths best suited to your profile.</p>
 
-    <form action="/submit" method="post" enctype="multipart/form-data">
+    <form action="/resume" method="post" enctype="multipart/form-data">
       <div class="drop-zone" id="dropZone">
         <label for="resume" id="resume-label">Click or drag your resume here to upload (PDF/DOC):</label>
         <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" />
         <span id="file-name"></span>
         <span id="upload-success">✔ File Uploaded</span>
       </div>
-
       <input type="submit" value="Submit" />
     </form>
   </div>
