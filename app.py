@@ -131,7 +131,7 @@ def submit():
 
 # ===== Resume Upload Page =====
 @app.route('/upload')
-def resources():
+def upload():
     return render_template('upload_form.html')
 
 @app.route('/analyze_resume', methods=['POST'])
