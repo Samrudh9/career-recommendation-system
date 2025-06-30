@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Career Guidance - Resume Upload</title>
+  <style>
+    :root {
+      --glass-color: #1a1b22;
+      --text-color: #e0e0e0;
+      --bg-color: #1c1e24;
+      --accent: #00c2ff;
+      --shadow: 0 12px 28px rgba(0, 255, 255, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      background: var(--glass-color);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 600px;
+      animation: fadeIn 1.5s ease-in-out;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+      background: linear-gradient(90deg, var(--accent), #00ffe0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      color: #c0c0c0;
+      line-height: 1.5;
+    }
+
+    .drop-zone {
+      border: 2px dashed var(--accent);
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 20px;
+      background-color: rgba(0, 255, 255, 0.04);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+    }
+
+    .drop-zone:hover {
+      background-color: rgba(0, 255, 255, 0.1);
+      transform: scale(1.02);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+    }
+
+    .drop-zone::before {
+      content: "📄";
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .drop-zone input[type="file"] {
+      display: none;
+    }
+
+    #file-name {
+      display: block;
+      margin-top: 10px;
+      color: #00ffaa;
+      font-weight: 500;
+    }
+
+    #upload-success {
+      display: none;
+      margin-top: 10px;
+      color: #00ffaa;
+      font-size: 1.1rem;
+    }
+
+    .drop-zone.uploaded {
+      background-color: rgba(0, 255, 0, 0.1);
+      border-color: #00ff88;
+      color: #00ff88;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    }
+
+    input[type="submit"] {
+      background-color: var(--accent);
+      color: #111;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      width: 100%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
+    }
+
+    input[type="submit"]:hover {
+      background-color: #00ddc2;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Upload Your Resume</h1>
+    <p>Your resume helps us understand your qualifications, skills, and interests better.
+    Uploading it allows us to give personalized career guidance and recommend paths best suited to your profile.</p>
+
+    <form action="/submit" method="post" enctype="multipart/form-data">
+      <div class="drop-zone" id="dropZone">
+        <label for="resume" id="resume-label">Click or drag your resume here to upload (PDF/DOC):</label>
+        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" />
+        <span id="file-name"></span>
+        <span id="upload-success">✔ File Uploaded</span>
+      </div>
+
+      <input type="submit" value="Submit" />
+    </form>
+  </div>
+
+  <script>
+    const resumeInput = document.getElementById("resume");
+    const dropZone = document.getElementById("dropZone");
+    const fileNameSpan = document.getElementById("file-name");
+    const uploadSuccess = document.getElementById("upload-success");
+    const label = document.getElementById("resume-label");
+
+    dropZone.addEventListener("click", () => {
+      resumeInput.click();
+    });
+
+    resumeInput.addEventListener("change", () => {
+      const file = resumeInput.files[0];
+      if (file) {
+        fileNameSpan.textContent = `Resume uploaded: ${file.name}`;
+        dropZone.classList.add("uploaded");
+        uploadSuccess.style.display = "inline";
+        label.style.display = "none";
+      } else {
+        fileNameSpan.textContent = "";
+        dropZone.classList.remove("uploaded");
+        uploadSuccess.style.display = "none";
+        label.style.display = "inline";
+      }
+    });
+  </script>
+</body>
+</html>

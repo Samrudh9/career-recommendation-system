@@ -2,125 +2,330 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Career Recommendation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Career Guidance Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --glass-color: #1a1b22;
+      --text-color: #e0e0e0;
+      --bg-color: #1c1e24;
+      --accent: #00c2ff;
+      --shadow: 0 12px 28px rgba(0, 255, 255, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      padding: 0;
-      background-color: #0b1d2e; 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #ffffff;
-    }
-
-    h1 {
-      text-align: center;
-      font-size: 2.8rem;
-      color: #00f5ff;
-      margin-top: 40px;
-      text-shadow: 0 0 10px rgba(0, 245, 255, 0.7);
-    }
-
-    p.subtitle {
-      text-align: center;
-      color: #a8d4f2;
-      font-size: 1rem;
-      margin-top: 10px;
+      font-family: 'Orbitron', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
     }
 
     .form-container {
-      background-color: #1c2a38;
-      padding: 40px;
-      border-radius: 15px;
-      max-width: 600px;
-      margin: 50px auto;
-      box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+      background: var(--glass-color);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 700px;
+      animation: fadeIn 1.5s ease-in-out;
     }
 
-    .form-container h2 {
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
       text-align: center;
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-      color: #66ccff;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      background: linear-gradient(90deg, var(--accent), #00ffe0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+      line-height: 1.3;
     }
 
     label {
       display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #c9e6ff;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
     }
 
-    .form-input {
+    .form-input, select {
       width: 100%;
       padding: 12px;
-      border: none;
-      border-radius: 8px;
-      margin-bottom: 20px;
+      border-radius: 12px;
+      margin-bottom: 18px;
       font-size: 1rem;
-      background-color: #2f4055;
+      background-color: rgba(255, 255, 255, 0.05);
       color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .form-input:focus {
-      outline: 2px solid #00ffff;
-      background-color: #3e536b;
+    .form-input:focus, select:focus {
+      outline: 2px solid var(--accent);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    select option {
+      background-color: #1c2a38;
+      color: white;
+    }
+
+    a.upload-link {
+      display: inline-block;
+      text-decoration: none;
+      background-color: var(--accent);
+      color: #111;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 30px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
+    }
+
+    a.upload-link:hover {
+      background-color: #00ddc2;
+      transform: scale(1.05);
     }
 
     input[type="submit"] {
-      background-color: #00cfff;
-      color: #001f33;
+      background-color: var(--accent);
+      color: #111;
       padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
       font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      width: 100%;
       cursor: pointer;
       transition: background-color 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
     }
 
     input[type="submit"]:hover {
-      background-color: #00aacc;
+      background-color: #00ddc2;
+    }
+
+    .suggestions {
+      position: relative;
+    }
+
+    .suggestion-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background-color: #1a1b22;
+      border-radius: 10px;
+      z-index: 999;
+      max-height: 150px;
+      overflow-y: auto;
+      display: none;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .suggestion-list div {
+      padding: 8px 12px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .suggestion-list div:hover,
+    .suggestion-list div.active {
+      background-color: #00bfff;
+      color: #000;
+    }
+
+    .container {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .or-separator {
+      text-align: center;
+      margin: 1.5rem 0;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    .or-separator::before,
+    .or-separator::after {
+      content: "";
+      display: inline-block;
+      width: 40%;
+      height: 1px;
+      background-color: rgba(0, 194, 255, 0.5);
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #c0c0c0;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+      .form-container {
+        padding: 1.6rem;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-
-  <h1>CAREER GUIDENCE FORM</h1>
-   
-
   <div class="form-container">
-    <h2>User Information Form</h2>
+    <h1>Career Guidance Form</h1>
     <form action="/submit" method="post">
       <label for="name">Name:</label>
-      <input class="form-input" type="text" id="name" name="name" placeholder="Enter your name" required />
+      <input class="form-input" type="text" id="name" name="name" required />
 
       <label for="interest">Interest:</label>
-      <input class="form-input" type="text" id="interest" name="interest" placeholder="Enter your interest" required />
+      <div class="suggestions">
+        <input class="form-input" type="text" id="interest" name="interest" autocomplete="off" placeholder="e.g., AI, Finance, Design" />
+        <div class="suggestion-list" id="interest-suggestions"></div>
+      </div>
 
       <label for="skills">Skills:</label>
-      <input class="form-input" type="text" id="skills" name="skills" placeholder="Enter your skills"  />
+      <div class="suggestions">
+        <input class="form-input" type="text" id="skills" name="skills" autocomplete="off" placeholder="e.g., Python, SQL, Java" />
+        <div class="suggestion-list" id="skills-suggestions"></div>
+      </div>
 
       <label for="qualification">Highest Qualification:</label>
-<input class="form-input" type="text" id="qualification" name="qualification" />
+      <div class="suggestions">
+        <input class="form-input" type="text" id="qualification" name="qualification" autocomplete="off" placeholder="e.g., B.Tech, MBA, 12th" />
+        <div class="suggestion-list" id="qualification-suggestions"></div>
+      </div>
 
-<label for="career">Preferred Career Field:</label>
-<select class="form-input" id="career_pref" name="career_pref">
-  <option value=""> Select a Field </option>
-  <option value="engineering">Engineering</option>
-  <option value="medical">Medical</option>
-  <option value="business">Business</option>
-  <option value="it">Information Technology</option>
-  <option value="creative">Creative</option>
-</select>
+      <label for="career_pref">Preferred Career Field:</label>
+      <select id="career_pref" name="career_pref" required>
+        <option value="" disabled selected hidden>Select a Field</option>
+        <option value="engineering">Engineering</option>
+        <option value="medical">Medical</option>
+        <option value="business">Business</option>
+        <option value="it">Information Technology</option>
+        <option value="creative">Creative</option>
+      </select>
 
+      <div class="or-separator">OR</div>
 
+      <div class="container">
+        <p>Get personalized career guidance by uploading your resume.<br>
+        Click below to start your journey!</p>
+        <a href="upload_form.html" class="upload-link">Upload Your Resume</a>
+      </div>
 
+      
 
-  
       <input type="submit" value="Submit" />
     </form>
   </div>
 
+  <script>
+    const suggestionMap = {
+      skills: [ "python", "sql", "java", "android", "communication", "leadership", "css", "html", "javascript", "c++", "algorithms", "R", "statistics", "tensorflow", "cybersecurity", "networking", "linux", "shell scripting", "adobe photoshop", "illustrator", "3D modeling", "cad", "excel", "flask", "salesforce", "CRM", "SEO", "google analytics", "pandas", "numpy", "UI/UX design", "figma", "financial modeling", "MATLAB", "control system", "SAP", "AWS", "Docker", "kubernetes", "Spring boot" ],
+      interest: [ "Artificial Intelligence", "Finance", "Design", "Healthcare", "Gaming", "Marketing", "Web Development", "Animation", "Automobiles", "Teaching", "Entrepreneurship", "Writing" ],
+      qualification: [ "10th", "12th", "Diploma", "B.Tech", "B.Sc", "B.Com", "MBA", "M.Tech", "Ph.D" ]
+    };
+
+    function setupAutoSuggest(inputId, suggestionBoxId, isMulti = false) {
+      const input = document.getElementById(inputId);
+      const suggestionBox = document.getElementById(suggestionBoxId);
+      const list = suggestionMap[inputId];
+      let currentFocus = -1;
+
+      input.addEventListener("input", () => {
+        const entered = input.value;
+        const keyword = isMulti ? entered.split(',').pop().trim().toLowerCase() : entered.trim().toLowerCase();
+        suggestionBox.innerHTML = "";
+        currentFocus = -1;
+
+        if (!keyword) {
+          suggestionBox.style.display = "none";
+          return;
+        }
+
+        const filtered = list.filter(item => item.toLowerCase().includes(keyword));
+        if (!filtered.length) {
+          suggestionBox.style.display = "none";
+          return;
+        }
+
+        filtered.forEach(item => {
+          const div = document.createElement("div");
+          div.textContent = item;
+          div.addEventListener("click", () => {
+            if (isMulti) {
+              let parts = input.value.split(',');
+              parts[parts.length - 1] = item;
+              input.value = parts.map(p => p.trim()).join(', ') + ', ';
+            } else {
+              input.value = item;
+            }
+            suggestionBox.innerHTML = "";
+            suggestionBox.style.display = "none";
+            input.focus();
+          });
+          suggestionBox.appendChild(div);
+        });
+
+        suggestionBox.style.display = "block";
+      });
+
+      input.addEventListener("keydown", (e) => {
+        const items = suggestionBox.querySelectorAll("div");
+        if (!items.length) return;
+
+        if (e.key === "ArrowDown") {
+          currentFocus = (currentFocus + 1) % items.length;
+          updateActive(items);
+        } else if (e.key === "ArrowUp") {
+          currentFocus = (currentFocus - 1 + items.length) % items.length;
+          updateActive(items);
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          if (currentFocus > -1) items[currentFocus].click();
+        }
+      });
+
+      function updateActive(items) {
+        items.forEach(item => item.classList.remove("active"));
+        if (currentFocus >= 0) items[currentFocus].classList.add("active");
+      }
+
+      document.addEventListener("click", e => {
+        if (!e.target.closest(".suggestions")) suggestionBox.style.display = "none";
+      });
+    }
+
+    setupAutoSuggest("interest", "interest-suggestions", false);
+    setupAutoSuggest("skills", "skills-suggestions", true);
+    setupAutoSuggest("qualification", "qualification-suggestions", false);
+  </script>
 </body>
 </html>
-

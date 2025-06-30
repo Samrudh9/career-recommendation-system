@@ -4,81 +4,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your AI Career Path</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet" />
- <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
 
-  <nav class="glass-nav">
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="input.html">Start Quiz</a></li>
-      <li><a href ="#features">Features</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-  </nav>
+  <section class="glass-card">
+    <h1 class="title">Discover Your Ideal Career Path</h1>
 
-  <main class="page-content">
-    <section class="glass-card">
-      <h1 class="title">Discover Your Ideal Career Path</h1>
-      <p class="subtitle">
-        Tired of guessing what career suits you best?  Our intelligent system uses your
-        <strong>interests</strong>, <strong>skills</strong>, and <strong>personality</strong> to match you with ideal careers.
+    <p class="subtitle fade-in">
+      Tired of guessing what career suits you best? 🚀 Our intelligent system uses your
+      <strong>interests</strong>, <strong>skills</strong>, and <strong>personality</strong> to match you with ideal careers.
+    </p>
+
+    <p class="subtitle fade-in">
+      Simply answer a few questions and let our system do the thinking. Your future is just a few clicks away.
+    </p>
+
+    <button onclick="window.location.href='input.html'">Get Started</button>
+  </section>
+
+ 
+ <section class="glass-card">
+    <h1 class="title">How does AI enhance career decision-making?</h1>
+
+   <section class="subtitle fade-in glass-card ">
+      <h2 >Learning Resources</h2>
+      <p >
+        AI-driven recommendations for educational content including curated courses, top-rated books, and recognized certifications.
       </p>
-      <p class="subtitle " >
-        Simply answer a few questions and let our system do the thinking. Your future is just a few clicks away.
-      </p>
-      <button onclick="window.location.href='input.html'">Get Started</button>
-    </section>
+</section>
+<section class="subtitle fade-in glass-card ">
+      <h2 >Role Matching</h2>
+      <p >
+AI analyzes user skills and interests to recommend career paths that align with real-world job roles, increasing relevance and fit.      </p>
+</section>
+<section class="subtitle fade-in glass-card ">
+      <h2 >Market Trends Insight</h2>
+      <p >AI tracks evolving job market trends to prioritize in-demand careers, helping users make future-proof decisions.     </p>
+</section>
+<section class="subtitle fade-in glass-card ">
+      <h2 >Personalized Roadmaps</h2>
+      <p >
+Based on user profiles, AI creates step-by-step career plans with goals, milestones, and role-specific advice for smooth progression.
 
-    <section id="features" class="glass-card2">
-      <h1 class="title">How does AI enhance career decision-making?</h1>
-      <div class="grid-container">
-        <div class="nested-glass-card fade-in">
-          <h2 class="subtitle">Learning Resources</h2>
-          <p class="subtitle">
-            AI-driven recommendations for educational content including curated courses, top-rated books, and recognized certifications.
-          </p>
-        </div>
+     </p>
+</section>
 
-        <div class="nested-glass-card fade-in">
-          <h2 class="subtitle">Role Matching</h2>
-          <p class="subtitle">
-            AI analyzes user skills and interests to recommend career paths that align with real-world job roles, increasing relevance and fit.
-          </p>
-        </div>
-
-        <div class="nested-glass-card fade-in">
-          <h2 class="subtitle">Market Trends Insight</h2>
-          <p class="subtitle">
-            AI tracks evolving job market trends to prioritize in-demand careers, helping users make future-proof decisions.
-          </p>
-        </div>
-
-        <div class="nested-glass-card fade-in">
-          <h2 class="subtitle">Personalized Roadmaps</h2>
-          <p class="subtitle">
-            Based on user profiles, AI creates step-by-step career plans with goals, milestones, and role-specific advice for smooth progression.
-          </p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <button id="backToTop" title="Go to top">⬆️ Back to Top</button>
+ </section>
 
   <script>
-    window.onload = function () {
-      const btn = document.getElementById("backToTop");
-      window.addEventListener("scroll", function () {
-        btn.style.display = window.scrollY > 100 ? "block" : "none";
-      });
-      btn.addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      });
-    };
+    function scrollToForm() {
+      const form = document.getElementById("careerForm");
+      if (form) {
+        form.scrollIntoView({ behavior: "smooth" });
+      } else {
+        alert("Form not found. Make sure you add an element with ID 'careerForm'.");
+      }
+    }
   </script>
+
 </body>
 </html>
 
