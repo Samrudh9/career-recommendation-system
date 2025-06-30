@@ -96,6 +96,10 @@ def home():
 def form():
     return render_template('form.html')
 
+@app.route('/about')
+def form():
+    return render_template('about.html')
+
 @app.route('/submit', methods=['POST'])
 def submit():
     name = request.form['name']
