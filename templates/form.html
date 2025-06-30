@@ -10,7 +10,6 @@
       --glass-color: #1a1b22;
       --text-color: #e0e0e0;
       --bg-color: #1c1e24;
-      --highlight: #00688B;
       --accent: #00c2ff;
       --shadow: 0 12px 28px rgba(0, 255, 255, 0.15);
     }
@@ -61,7 +60,6 @@
       display: block;
       margin-bottom: 6px;
       font-size: 0.95rem;
-      color: var(--text-color);
     }
 
     .form-input, select {
@@ -85,57 +83,22 @@
       color: white;
     }
 
-    .drop-zone {
-      border: 2px dashed var(--accent);
-      border-radius: 15px;
-      padding: 30px;
-      text-align: center;
-      color: var(--accent);
-      margin-bottom: 20px;
-      background-color: rgba(0, 255, 255, 0.04);
+    a.upload-link {
+      display: inline-block;
+      text-decoration: none;
+      background-color: var(--accent);
+      color: #111;
+      padding: 12px 24px;
       font-size: 1rem;
-      cursor: pointer;
+      font-weight: bold;
+      border-radius: 30px;
       transition: background-color 0.3s ease, transform 0.3s ease;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
-      position: relative;
+      box-shadow: 0 4px 15px rgba(0, 198, 255, 0.4);
     }
 
-    .drop-zone:hover {
-      background-color: rgba(0, 255, 255, 0.1);
-      transform: scale(1.02);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-    }
-
-    .drop-zone::before {
-      content: "📄";
-      font-size: 2rem;
-      display: block;
-      margin-bottom: 10px;
-    }
-
-    .drop-zone input[type="file"] {
-      display: none;
-    }
-
-    #file-name {
-      display: block;
-      margin-top: 10px;
-      color: #00ffaa;
-      font-weight: 500;
-    }
-
-    #upload-success {
-      display: none;
-      margin-top: 10px;
-      color: #00ffaa;
-      font-size: 1.1rem;
-    }
-
-    .drop-zone.uploaded {
-      background-color: rgba(0, 255, 0, 0.1);
-      border-color: #00ff88;
-      color: #00ff88;
-      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    a.upload-link:hover {
+      background-color: #00ddc2;
+      transform: scale(1.05);
     }
 
     input[type="submit"] {
@@ -180,8 +143,43 @@
       color: white;
     }
 
-    .suggestion-list div:hover {
-      background-color: #0072ff;
+    .suggestion-list div:hover,
+    .suggestion-list div.active {
+      background-color: #00bfff;
+      color: #000;
+    }
+
+    .container {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .or-separator {
+      text-align: center;
+      margin: 1.5rem 0;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      position: relative;
+    }
+
+    .or-separator::before,
+    .or-separator::after {
+      content: "";
+      display: inline-block;
+      width: 40%;
+      height: 1px;
+      background-color: rgba(0, 194, 255, 0.5);
+      vertical-align: middle;
+      margin: 0 10px;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #c0c0c0;
+      margin-bottom: 1rem;
+      line-height: 1.5;
     }
 
     @media (max-width: 600px) {
@@ -202,21 +200,27 @@
 <body>
   <div class="form-container">
     <h1>Career Guidance Form</h1>
-    <form action="/submit" method="post" enctype="multipart/form-data">
+    <form action="/submit" method="post">
       <label for="name">Name:</label>
       <input class="form-input" type="text" id="name" name="name" required />
 
       <label for="interest">Interest:</label>
-      <input class="form-input" type="text" id="interest" name="interest" required />
+      <div class="suggestions">
+        <input class="form-input" type="text" id="interest" name="interest" autocomplete="off" placeholder="e.g., AI, Finance, Design" />
+        <div class="suggestion-list" id="interest-suggestions"></div>
+      </div>
 
       <label for="skills">Skills:</label>
       <div class="suggestions">
         <input class="form-input" type="text" id="skills" name="skills" autocomplete="off" placeholder="e.g., Python, SQL, Java" />
-        <div class="suggestion-list" id="suggestion-box"></div>
+        <div class="suggestion-list" id="skills-suggestions"></div>
       </div>
 
       <label for="qualification">Highest Qualification:</label>
-      <input class="form-input" type="text" id="qualification" name="qualification" />
+      <div class="suggestions">
+        <input class="form-input" type="text" id="qualification" name="qualification" autocomplete="off" placeholder="e.g., B.Tech, MBA, 12th" />
+        <div class="suggestion-list" id="qualification-suggestions"></div>
+      </div>
 
       <label for="career_pref">Preferred Career Field:</label>
       <select id="career_pref" name="career_pref" required>
@@ -228,82 +232,100 @@
         <option value="creative">Creative</option>
       </select>
 
-      <div class="drop-zone" id="dropZone">
-        <label for="resume" id="resume-label">Click or drag your resume here to upload (PDF/DOC):</label>
-        <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" />
-        <span id="file-name"></span>
-        <span id="upload-success">✔ File Uploaded</span>
+      <div class="or-separator">OR</div>
+
+      <div class="container">
+        <p>Get personalized career guidance by uploading your resume.<br>
+        Click below to start your journey!</p>
+        <a href="upload_form.html" class="upload-link">Upload Your Resume</a>
       </div>
+
+      
 
       <input type="submit" value="Submit" />
     </form>
   </div>
 
   <script>
-    const skills = [ "python", "sql", "java", "android", "communication", "leadership", "css", "html", "javascript", "c++", "algorithms", "R", "statistics", "tensorflow", "cybersecurity", "networking", "linux", "shell scripting", "adobe photoshop", "illustrator", "3D modeling", "cad", "excel", "business analysis", "flask", "salesforce", "CRM", "SEO", "google analytics", "pandas", "numpy", "UI/UX design", "figma", "financial modeling", "MATLAB", "control system", "SAP", "EAP system", "pytorch", "AWS", "Docker", "kubernetes", "English", "story-telling", "Recruitment", "onboarding", "taxation", "teaching", "mentoring", "Event planning", "Budgeting", "Negotiation", "Market-Research", "Research", "writing", "Spring boot" ];
+    const suggestionMap = {
+      skills: [ "python", "sql", "java", "android", "communication", "leadership", "css", "html", "javascript", "c++", "algorithms", "R", "statistics", "tensorflow", "cybersecurity", "networking", "linux", "shell scripting", "adobe photoshop", "illustrator", "3D modeling", "cad", "excel", "flask", "salesforce", "CRM", "SEO", "google analytics", "pandas", "numpy", "UI/UX design", "figma", "financial modeling", "MATLAB", "control system", "SAP", "AWS", "Docker", "kubernetes", "Spring boot" ],
+      interest: [ "Artificial Intelligence", "Finance", "Design", "Healthcare", "Gaming", "Marketing", "Web Development", "Animation", "Automobiles", "Teaching", "Entrepreneurship", "Writing" ],
+      qualification: [ "10th", "12th", "Diploma", "B.Tech", "B.Sc", "B.Com", "MBA", "M.Tech", "Ph.D" ]
+    };
 
-    const input = document.getElementById("skills");
-    const suggestionBox = document.getElementById("suggestion-box");
+    function setupAutoSuggest(inputId, suggestionBoxId, isMulti = false) {
+      const input = document.getElementById(inputId);
+      const suggestionBox = document.getElementById(suggestionBoxId);
+      const list = suggestionMap[inputId];
+      let currentFocus = -1;
 
-    input.addEventListener("input", function () {
-      const entered = this.value;
-      const parts = entered.split(',');
-      const currentWord = parts[parts.length - 1].trim().toLowerCase();
-      suggestionBox.innerHTML = "";
+      input.addEventListener("input", () => {
+        const entered = input.value;
+        const keyword = isMulti ? entered.split(',').pop().trim().toLowerCase() : entered.trim().toLowerCase();
+        suggestionBox.innerHTML = "";
+        currentFocus = -1;
 
-      if (currentWord.length === 0) {
-        suggestionBox.style.display = "none";
-        return;
-      }
-
-      const filtered = skills.filter(skill => skill.toLowerCase().includes(currentWord));
-
-      if (filtered.length === 0) {
-        suggestionBox.style.display = "none";
-        return;
-      }
-
-      filtered.forEach(skill => {
-        const div = document.createElement("div");
-        div.textContent = skill;
-        div.addEventListener("click", () => {
-          parts[parts.length - 1] = skill;
-          input.value = parts.map(p => p.trim()).join(", ") + ", ";
-          suggestionBox.innerHTML = "";
+        if (!keyword) {
           suggestionBox.style.display = "none";
-          input.focus();
+          return;
+        }
+
+        const filtered = list.filter(item => item.toLowerCase().includes(keyword));
+        if (!filtered.length) {
+          suggestionBox.style.display = "none";
+          return;
+        }
+
+        filtered.forEach(item => {
+          const div = document.createElement("div");
+          div.textContent = item;
+          div.addEventListener("click", () => {
+            if (isMulti) {
+              let parts = input.value.split(',');
+              parts[parts.length - 1] = item;
+              input.value = parts.map(p => p.trim()).join(', ') + ', ';
+            } else {
+              input.value = item;
+            }
+            suggestionBox.innerHTML = "";
+            suggestionBox.style.display = "none";
+            input.focus();
+          });
+          suggestionBox.appendChild(div);
         });
-        suggestionBox.appendChild(div);
+
+        suggestionBox.style.display = "block";
       });
 
-      suggestionBox.style.display = "block";
-    });
+      input.addEventListener("keydown", (e) => {
+        const items = suggestionBox.querySelectorAll("div");
+        if (!items.length) return;
 
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".suggestions")) {
-        suggestionBox.style.display = "none";
+        if (e.key === "ArrowDown") {
+          currentFocus = (currentFocus + 1) % items.length;
+          updateActive(items);
+        } else if (e.key === "ArrowUp") {
+          currentFocus = (currentFocus - 1 + items.length) % items.length;
+          updateActive(items);
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          if (currentFocus > -1) items[currentFocus].click();
+        }
+      });
+
+      function updateActive(items) {
+        items.forEach(item => item.classList.remove("active"));
+        if (currentFocus >= 0) items[currentFocus].classList.add("active");
       }
-    });
 
-    document.getElementById("resume").addEventListener("change", function () {
-      const file = this.files[0];
-      const fileNameSpan = document.getElementById("file-name");
-      const dropZone = document.getElementById("dropZone");
-      const uploadSuccess = document.getElementById("upload-success");
-      const label = document.getElementById("resume-label");
+      document.addEventListener("click", e => {
+        if (!e.target.closest(".suggestions")) suggestionBox.style.display = "none";
+      });
+    }
 
-      if (file) {
-        fileNameSpan.textContent = `Resume uploaded: ${file.name}`;
-        dropZone.classList.add("uploaded");
-        uploadSuccess.style.display = "inline";
-        label.style.display = "none";
-      } else {
-        fileNameSpan.textContent = "";
-        dropZone.classList.remove("uploaded");
-        uploadSuccess.style.display = "none";
-        label.style.display = "inline";
-      }
-    });
+    setupAutoSuggest("interest", "interest-suggestions", false);
+    setupAutoSuggest("skills", "skills-suggestions", true);
+    setupAutoSuggest("qualification", "qualification-suggestions", false);
   </script>
 </body>
 </html>
