@@ -97,7 +97,7 @@ def form():
     return render_template('form.html')
 
 @app.route('/about')
-def form():
+def about():
     return render_template('about.html')
 
 @app.route('/submit', methods=['POST'])
