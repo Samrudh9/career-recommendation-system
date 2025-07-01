@@ -1,6 +1,3 @@
-
-
-
 import os
 import sys
 import pickle
@@ -112,9 +109,13 @@ def submit():
 
     predictions = predict_career(interests, skills)
     top_career, confidence = predictions[0]
-
+   
     description_dict = model_package.get('descriptions', {})
-    description = description_dict.get(top_career.lower(), "Description not available for this career.")
+
+    description = description_dict.get(top_career) or \
+    description_dict.get(top_career.lower()) or \
+    "Description not available for this career."
+
 
     interests_list = [x.strip() for x in interests.split(',') if x.strip()]
     skills_list = [x.strip() for x in skills.split(',') if x.strip()]
@@ -134,23 +135,40 @@ def submit():
 def upload():
     return render_template('upload_form.html')
 
-@app.route('/analyze_resume', methods=['POST'])
-def analyze_resume_route():
-    if 'resume' not in request.files:
-        return "No file uploaded", 400
-    file = request.files['resume']
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(filepath)
+@app.route('/resume', methods=['POST'])
+def handle_resume_upload():
+    resume = request.files['resume']
+    qualification = request.form.get('qualification', 'Unknown')
 
-        extracted_text = extract_text_from_pdf(filepath)
-        analysis = analyze_resume(extracted_text)
+    if not resume or resume.filename == '':
+        return "❌ No resume uploaded", 400
 
-        return render_template('resume_result.html', analysis=analysis)
+    filename = secure_filename(resume.filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    resume.save(filepath)
 
-    return "Invalid file", 400
+    # Step 1: Extract text
+    extracted_text = extract_text_from_pdf(filepath)
 
+    # Step 2: Analyze resume
+    analysis = analyze_resume(extracted_text)
+    skills_found = analysis.get("skills", [])
+    resume_score = analysis.get("score", 60)  # out of 100
+
+    # Step 3: Predict career
+    skills_text = ', '.join(skills_found)
+    predictions = predict_career("", skills_text)
+    top_career, confidence = predictions[0]
+
+    # Step 4: Description
+    description_dict = model_package.get('descriptions', {})
+    description = description_dict.get(top_career.lower(), "Description not available for this career.")
+
+    # Step 5: Quality check + resources
+    quality_feedback = check_resume_quality(analysis.get("missing", []))
+    resources = recommend_resources(top_career)
+
+    
 # ===== Run =====
 if __name__ == '__main__':
     app.run(debug=True)
