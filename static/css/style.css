@@ -1,24 +1,28 @@
 :root {
-  --glass-color: #1a1b22;         /* Deeper translucent glass */
-  --text-color: #e0e0e0;                        /* Soft off-white text */
-  --bg-color: #1c1e24;                          /* Futuristic dark base */
-  --highlight: #00688B;                         /* Aqua neon accent */
-  --accent: #00c2ff;                            /* Sky blue for CTA / buttons */
-  --shadow: 0 12px 28px rgba(0, 255, 255, 0.15); /* Subtle glowing shadow */
+  --glass-color: #1a1b22;
+  --text-color: #e0e0e0;
+  --bg-color: #1c1e24;
+  --highlight: #00688B;
+  --accent: #00c2ff;
+  --shadow: 0 12px 28px rgba(0, 255, 255, 0.15);
 }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 2rem;
-    }
-    .title {
-     font-size: clamp(2.5rem, 5vw, 3.5rem);
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   text-align: center;
   font-weight: 700;
   margin-bottom: 2rem;
@@ -29,27 +33,32 @@
   background: linear-gradient(90deg, var(--accent), #00ffe0);
   -webkit-background-clip: text;
   background-clip: text;
-  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: titleFadeIn 1.5s ease-in-out forwards;
   opacity: 0;
   transform: translateY(-20px);
-    }
+}
+
 @keyframes titleFadeIn {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-    .fade-in {
+
+.subtitle {
+  font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.6;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+ color: #e0e0e0;
+}
+
+.fade-in {
   opacity: 0;
   animation: fadeInText 2s ease-in forwards;
-  color: #407ab0bd;
-  font-size: 1rem;
-  max-width: 630px;
-  margin-bottom: 2.5rem;
-  line-height: 1.6;
-  text-align: center;
 }
 
 @keyframes fadeInText {
@@ -58,21 +67,6 @@
   }
 }
 
-
-.subtitle {
-  font-family: 'Orbitron', 'Inter', 'Poppins', sans-serif;
-  font-size: 1rem;
-  max-width: 630px;
-  text-align: center;
-  margin-bottom: 2.5rem;
-  line-height: 1.6;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  background: linear-gradient(90deg, #00c2ff, #00ffe0);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
 .glass-card {
   background: var(--glass-color);
   border-radius: 20px;
@@ -82,87 +76,225 @@
   padding: 2.5rem;
   width: 90%;
   max-width: 700px;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  animation: glassFadeIn 1.5s ease-out forwards;
+  animation: glassFadeIn 0.75s ease-out forwards;
   opacity: 0;
-  transform: none;
-  margin: 0 auto 5rem auto; 
+  margin: 0 auto 5rem auto;
+  text-align: center;
+transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
-
-
 
 @keyframes glassFadeIn {
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
-    .glass-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 50px rgba(0, 255, 255, 0.2);
-      z-index: 10;
-    }
 
-    .glass-card p {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      text-align: justify;
-      color: var(--text-color)
-    }
-    .glass-card a {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.8rem 1.4rem;
-      font-weight: 500;
-      font-size: 1rem;
-      color: #fff;
-      background: var(--highlight);
-      border: none;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.3s ease;
-      
-    }
-    .glass-card a:hover {
-      background: #005f8f;
-    }
-    @media (max-width: 600px) {
-      .title {
-        font-size: 1.9rem;
-      }
-      .glass-card h2 {
-        font-size: 1.5rem;
-      }
-      .glass-card {
-        padding: 1.6rem;
-      }
-    }
+.glass-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 50px rgba(0, 255, 255, 0.2);
+}
 
- button {
-      margin-top: 2rem;
-      padding: 0.9rem 2rem;
-      font-size: 1rem;
-      font-weight: 600;
-      background-color: var(--accent);
-      color: #111;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 3px 10px rgba(0, 255, 224, 0.2);
-    }
+button {
 
-    button:hover {
-      background-color: #00ddc2;
-    }
+  margin-top: 2rem;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--accent);
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 255, 224, 0.2);
+  display: inline-block;
+  text-decoration: none;
+}
 
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+button:hover {
+  background-color: #00ddc2;
+}
+
+.button {
+
+  margin-top: 2rem;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--accent);
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 255, 224, 0.2);
+  display: inline-block;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #00ddc2;
+}
+
+#backToTop {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  right: 2rem;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: #00ffe0;
+  color: #000;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 18px;
+  box-shadow: -3px 0 12px #00ffe0aa;
+  transition: 0.3s ease;
+}
+
+#backToTop:hover {
+  background-color: #00cdb3;
+}
+
+.glass-nav {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  backdrop-filter: blur(12px);
+  background: rgba(0, 255, 224, 0.08);
+  border-radius: 16px;
+  padding: 12px 30px;
+  margin: 20px auto;
+  width: 90%;
+  max-width: 1100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 255, 224, 0.2);
+  border: 1px solid rgba(0, 255, 224, 0.2);
+}
+
+.glass-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+.glass-nav a {
+  color: #00ffe0;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 4px;
+  transition: color 0.3s ease;
+}
+
+.glass-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  background-color: #00ffe0;
+  transition: width 0.3s ease;
+}
+
+.glass-nav a:hover {
+  color: #ffffff;
+}
+
+.glass-nav a:hover::after {
+  width: 100%;
+}
+
+.glass-card2 {
+  background: var(--glass-color);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 2rem;
+  margin: 2rem auto;
+  width: 95vw;
+  max-width: 1400px;
+  min-height: 90vh;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.grid-container {
+  display: grid;
+ grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nested-glass-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 1.8rem 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: transform 0.3s ease;
+  text-align: center;
+ 
+}
+
+.nested-glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 255, 255, 0.2);
+}
+
+.nested-glass-card .subtitle {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  background: none;
+  -webkit-text-fill-color: var(--text-color);
+  text-transform: none;
+}
+
+@media (max-width: 768px) {
+  .glass-card2 {
+    padding: 1.2rem;
+    min-height: unset;
+    margin: 1rem;
+  }
+  .glass-card2 .title {
+    font-size: 2rem;
+  }
+  .glass-card2 .subtitle {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .glass-card {
+    padding: 1.6rem;
+  }
+  .title {
+    font-size: 1.9rem;
+  }
+}
+
 
 
 

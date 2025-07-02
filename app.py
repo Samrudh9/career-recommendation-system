@@ -1,10 +1,30 @@
+import os
+import sys
 import pickle
+import random
 from flask import Flask, request, render_template
-import random  # Used to simulate job count
+from werkzeug.utils import secure_filename
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
+from analyzer.resume_parser import extract_text_from_pdf
+from analyzer.resume_analyzer import analyze_resume
+from analyzer.quality_checker import check_resume_quality
+from analyzer.resource_recommender import recommend_resources
+
 
 app = Flask(__name__)
 
-# ✅ Load trained model from file
+# ===== Configuration =====
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'pdf'}
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# ===== Load Trained Model =====
 def load_model():
     try:
         with open('model/career_model.pkl', 'rb') as f:
@@ -14,11 +34,11 @@ def load_model():
         return None
 
 model_package = load_model()
-# ✅ Normalize text
+
+# ===== Utility Functions =====
 def normalize(text):
     return text.lower().replace('-', ' ').strip()
 
-# ✅ Simulated Job Count Lookup (you can replace this later with real API or scraped data)
 def fetch_job_count(career):
     simulated_counts = {
         "data scientist": 1300,
@@ -29,30 +49,22 @@ def fetch_job_count(career):
     }
     return simulated_counts.get(career.lower(), random.randint(200, 1000))
 
-# ✅ Normalize job demand score (0.0 to 1.0)
 def normalize_demand(count, min_jobs=50, max_jobs=2000):
     return min(1.0, max(0.0, (count - min_jobs) / (max_jobs - min_jobs)))
 
-# ✅ Predict top 1 career with job demand enhancement
 def predict_career(interests, skills):
     if model_package is None:
         return [("Model not loaded", 0.0)]
 
-    # Normalize input
     combined = []
     if isinstance(interests, str):
         combined += [normalize(x) for x in interests.split(',') if x.strip()]
     if isinstance(skills, str):
         combined += [normalize(x) for x in skills.split(',') if x.strip()]
 
-    print(f"DEBUG: Normalized input features: {combined}")
-
     known_features = set(normalize(f) for f in model_package['feature_names'])
     filtered = [f for f in combined if f in known_features]
 
-    print(f"DEBUG: Filtered input features: {filtered}")
-
-    # Encode input
     mlb = model_package['feature_encoder']
     X = mlb.transform([filtered])
 
@@ -63,7 +75,6 @@ def predict_career(interests, skills):
     top_indices = proba.argsort()[-5:][::-1]
     top_preds = [(careers[i], round(proba[i] * 100, 2)) for i in top_indices]
 
-    # Enhance with job demand
     hybrid_scores = []
     for career, conf in top_preds:
         job_count = fetch_job_count(career)
@@ -71,18 +82,23 @@ def predict_career(interests, skills):
         final_score = round(0.7 * (conf / 100) + 0.3 * demand_score, 4)
         hybrid_scores.append((career, round(final_score * 100, 2)))
 
-    # Return only top 1
     return sorted(hybrid_scores, key=lambda x: x[1], reverse=True)[:1]
 
-# ✅ Route: Home page
+# ===== Routes =====
 @app.route('/')
 def home():
     return render_template('intro.html')
+
 @app.route('/form')
 def form():
     return render_template('form.html')
 
-# ✅ Route: Form submission
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+
+
 @app.route('/submit', methods=['POST'])
 def submit():
     name = request.form['name']
@@ -91,15 +107,16 @@ def submit():
     qualification = request.form['qualification']
     career_pref = request.form.get('career_pref', '').strip()
 
-
     predictions = predict_career(interests, skills)
     top_career, confidence = predictions[0]
-
-       # ✅ Get the description for the predicted career (normalized)
+   
     description_dict = model_package.get('descriptions', {})
-    description = description_dict.get(top_career.lower(), "Description not available for this career.")
 
-    # Process user input
+    description = description_dict.get(top_career) or \
+    description_dict.get(top_career.lower()) or \
+    "Description not available for this career."
+
+
     interests_list = [x.strip() for x in interests.split(',') if x.strip()]
     skills_list = [x.strip() for x in skills.split(',') if x.strip()]
 
@@ -113,6 +130,45 @@ def submit():
                            confidence=confidence,
                            description=description)
 
-# ✅ Run app
+# ===== Resume Upload Page =====
+@app.route('/upload')
+def upload():
+    return render_template('upload_form.html')
+
+@app.route('/resume', methods=['POST'])
+def handle_resume_upload():
+    resume = request.files['resume']
+    qualification = request.form.get('qualification', 'Unknown')
+
+    if not resume or resume.filename == '':
+        return "❌ No resume uploaded", 400
+
+    filename = secure_filename(resume.filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    resume.save(filepath)
+
+    # Step 1: Extract text
+    extracted_text = extract_text_from_pdf(filepath)
+
+    # Step 2: Analyze resume
+    analysis = analyze_resume(extracted_text)
+    skills_found = analysis.get("skills", [])
+    resume_score = analysis.get("score", 60)  # out of 100
+
+    # Step 3: Predict career
+    skills_text = ', '.join(skills_found)
+    predictions = predict_career("", skills_text)
+    top_career, confidence = predictions[0]
+
+    # Step 4: Description
+    description_dict = model_package.get('descriptions', {})
+    description = description_dict.get(top_career.lower(), "Description not available for this career.")
+
+    # Step 5: Quality check + resources
+    quality_feedback = check_resume_quality(analysis.get("missing", []))
+    resources = recommend_resources(top_career)
+
+    
+# ===== Run =====
 if __name__ == '__main__':
     app.run(debug=True)
