@@ -145,7 +145,7 @@ if __name__ == "__main__":
     print(f"\nExplanation:\n{explanation}")
     
     # Update model with new trend data
-    estimator.update_model("data/new_trends.csv")
+    estimator.update_model("/dataset/")
     
     # Save model state
     estimator.save_model("models/salary_estimator.pkl")
