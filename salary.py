@@ -184,6 +184,6 @@ data = [
 ]
 
 df = pd.DataFrame(data)
-df.to_csv("career_data_with_qualifications.csv", index=False)
+df.to_csv("dataset/career_data_with_qualifications.csv", index=False)
 
 print("career_data_with_qualifications.csv created successfully with 30 careers and qualification requirements.")
