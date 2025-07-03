@@ -1,37 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Resume Analysis Result</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(6px);
+    }
+  </style>
 </head>
 <body>
-  <h1>Resume Analysis Result</h1>
+  <h1 class="title">Resume Analysis Results</h1>
 
-  {% if analysis_result %}
-    <h3>Detected Skills:</h3>
+  <div class="glass-card">
+    <h2>Extracted Skills</h2>
+    <p>{{ skills }}</p>
+  </div>
+
+  <div class="glass-card">
+    <h2>Resume Score</h2>
+    <p>{{ resume_score }} / 100</p>
+  </div>
+
+  <div class="glass-card">
+    <h2>Top 3 Career Recommendations</h2>
+    {% for career in top_3_careers %}
+      <div style="margin-bottom: 15px;">
+        <h3>{{ career.career }}</h3>
+        <p><strong>Confidence:</strong> {{ career.confidence }}%</p>
+        <p><strong>Description:</strong> {{ career.description }}</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="glass-card">
+    <h2>Resume Quality Feedback</h2>
     <ul>
-      {% for skill in analysis_result.skills %}
-        <li>{{ skill }}</li>
+      {% for feedback in quality_feedback %}
+        <li>{{ feedback }}</li>
       {% endfor %}
     </ul>
+  </div>
 
-    <h3>Suggested Career(s):</h3>
+  <div class="glass-card">
+    <h2>Recommended Learning Resources</h2>
     <ul>
-      {% for career in analysis_result.careers %}
-        <li>{{ career }}</li>
+      {% for resource in resources %}
+        <li><a href="{{ resource.link }}" target="_blank">{{ resource.title }}</a></li>
       {% endfor %}
     </ul>
+  </div>
 
-    <h3>Suggestions to Improve Resume:</h3>
-    <ul>
-      {% for tip in analysis_result.suggestions %}
-        <li>{{ tip }}</li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>No analysis data available.</p>
-  {% endif %}
-
-  <a href="/">Go back</a>
+  <div class="glass-card">
+    <a href="/" class="button">Back to Home</a>
+  </div>
 </body>
 </html>

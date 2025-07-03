@@ -13,7 +13,6 @@ from analyzer.quality_checker import check_resume_quality
 from analyzer.resource_recommender import recommend_resources
 from analyzer.salary_estimator import salary_est
 
-
 app = Flask(__name__)
 
 # ===== Configuration =====
@@ -83,7 +82,7 @@ def predict_career(interests, skills):
         final_score = round(0.7 * (conf / 100) + 0.3 * demand_score, 4)
         hybrid_scores.append((career, round(final_score * 100, 2)))
 
-    return sorted(hybrid_scores, key=lambda x: x[1], reverse=True)[:1]
+    return sorted(hybrid_scores, key=lambda x: x[1], reverse=True)[:3]
 
 # ===== Routes =====
 @app.route('/')
@@ -98,8 +97,6 @@ def form():
 def about():
     return render_template('about.html')
 
-
-
 @app.route('/submit', methods=['POST'])
 def submit():
     name = request.form['name']
@@ -109,14 +106,18 @@ def submit():
     career_pref = request.form.get('career_pref', '').strip()
 
     predictions = predict_career(interests, skills)
-    top_career, confidence = predictions[0]
-   
     description_dict = model_package.get('descriptions', {})
 
-    description = description_dict.get(top_career) or \
-    description_dict.get(top_career.lower()) or \
-    "Description not available for this career."
-
+    top_3_careers = []
+    for career, confidence in predictions:
+        description = description_dict.get(career) or \
+                      description_dict.get(career.lower()) or \
+                      "Description not available for this career."
+        top_3_careers.append({
+            'career': career,
+            'confidence': confidence,
+            'description': description
+        })
 
     interests_list = [x.strip() for x in interests.split(',') if x.strip()]
     skills_list = [x.strip() for x in skills.split(',') if x.strip()]
@@ -127,9 +128,7 @@ def submit():
                            skills=', '.join(skills_list),
                            qualification=qualification,
                            career_pref=career_pref,
-                           career=top_career,
-                           confidence=confidence,
-                           description=description)
+                           top_3_careers=top_3_careers)
 
 # ===== Resume Upload Page =====
 @app.route('/upload')
@@ -149,29 +148,43 @@ def handle_resume_upload():
     resume.save(filepath)
 
     extracted_text = extract_text_from_pdf(filepath)
-
-    # Step 2: Analyze resume
     analysis = analyze_resume(extracted_text)
     skills_found = analysis.get("skills", [])
-    resume_score = analysis.get("score", 60)  # out of 100
+    resume_score = analysis.get("score", 60)
 
-    # Step 3: Predict career
     skills_text = ', '.join(skills_found)
     predictions = predict_career("", skills_text)
-    top_career, confidence = predictions[0]
 
-       # 4️⃣ Salary estimate
+    top_3_careers = []
+    description_dict = model_package.get('descriptions', {})
+    for career, confidence in predictions:
+        description = description_dict.get(career) or \
+                      description_dict.get(career.lower()) or \
+                      "Description not available for this career."
+        top_3_careers.append({
+            'career': career,
+            'confidence': confidence,
+            'description': description
+        })
+
     salary_value, _ = salary_est.estimate(
         skills=skills_text,
-        career=top_career,
+        career=predictions[0][0],
         qualification=qualification
     )
     predicted_salary = f"₹{salary_value:,}/year"
 
     quality_feedback = check_resume_quality(analysis.get("missing", []))
-    resources = recommend_resources(top_career)
+    resources = recommend_resources(predictions[0][0])
 
-    
+    return render_template('resume_result.html',
+                           skills=skills_text,
+                           resume_score=resume_score,
+                           predicted_salary=predicted_salary,
+                           quality_feedback=quality_feedback,
+                           resources=resources,
+                           top_3_careers=top_3_careers)
+
 # ===== Run =====
 if __name__ == '__main__':
     app.run(debug=True)
