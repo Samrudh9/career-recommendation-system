@@ -14,12 +14,6 @@ from sklearn.pipeline import Pipeline
 
 
 class SalaryEstimator:
-    """Entry‑level salary estimator.
-
-    If the serialized model does not exist, it will automatically train from
-    the CSV located at ``csv_path`` (default
-    ``dataset/career_data_with_qualifications.csv``) and save it.
-    """
 
     def __init__(self,
                  model_path: Union[str, Path] = "model/salary_model.pkl",

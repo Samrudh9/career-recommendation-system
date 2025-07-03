@@ -11,6 +11,7 @@ from analyzer.resume_parser import extract_text_from_pdf
 from analyzer.resume_analyzer import analyze_resume
 from analyzer.quality_checker import check_resume_quality
 from analyzer.resource_recommender import recommend_resources
+from analyzer.salary_estimator import SalaryEstimator
 
 
 app = Flask(__name__)
@@ -147,7 +148,6 @@ def handle_resume_upload():
     filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     resume.save(filepath)
 
-    # Step 1: Extract text
     extracted_text = extract_text_from_pdf(filepath)
 
     # Step 2: Analyze resume
@@ -160,11 +160,14 @@ def handle_resume_upload():
     predictions = predict_career("", skills_text)
     top_career, confidence = predictions[0]
 
-    # Step 4: Description
-    description_dict = model_package.get('descriptions', {})
-    description = description_dict.get(top_career.lower(), "Description not available for this career.")
-
-    # Step 5: Quality check + resources
+       # 4️⃣ Salary estimate
+    salary_value, _ = SalaryEstimator.estimate(
+        skills=skills_text,
+        career=top_career,
+        qualification=qualification
+    )
+    predicted_salary = f"₹{salary_value:,}/year"
+    
     quality_feedback = check_resume_quality(analysis.get("missing", []))
     resources = recommend_resources(top_career)
 
