@@ -2,6 +2,7 @@ import os
 import sys
 import pickle
 import random
+import tempfile
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 
@@ -143,11 +144,10 @@ def handle_resume_upload():
     if not resume or resume.filename == '':
         return "❌ No resume uploaded", 400
 
-    filename = secure_filename(resume.filename)
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    resume.save(filepath)
+    with tempfile.NamedTemporaryFile(delete=True, suffix=".pdf") as temp_file:
+        resume.save(temp_file.name)  # Save uploaded resume to temp file
+        extracted_text = extract_text_from_pdf(temp_file.name)
 
-    extracted_text = extract_text_from_pdf(filepath)
     analysis = analyze_resume(extracted_text)
     skills_found = analysis.get("skills", [])
     resume_score = analysis.get("score", 60)
