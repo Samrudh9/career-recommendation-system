@@ -174,7 +174,9 @@ def handle_resume_upload():
     )
     predicted_salary = f"₹{salary_value:,}/year"
 
-    quality_feedback = check_resume_quality(analysis.get("missing", []))
+    quality_report = check_resume_quality(extracted_text)
+    resume_score = quality_report["score"]
+    quality_tips = quality_report["tips"]
     resources = recommend_resources(predictions[0][0])
 
     return render_template('resume_result.html',
